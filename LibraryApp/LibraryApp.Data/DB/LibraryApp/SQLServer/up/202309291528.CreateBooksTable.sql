@@ -1,0 +1,23 @@
+﻿IF NOT EXISTS(SELECT * FROM SYS.OBJECTS 
+	WHERE OBJECT_ID = OBJECT_ID(N'[Books]') AND TYPE IN (N'U'))
+BEGIN
+	
+	CREATE TABLE [Books]
+	(
+		BookId INT IDENTITY(1,1),
+		[Title] VARCHAR(100),
+		AuthorId INT NOT NULL ,
+		SeriesId INT,
+		ReleaseYear INT NOT NULL,
+		ReleaseDate DATETIME
+	) 
+
+	ALTER TABLE [Books]
+	ADD CONSTRAINT PK_Books PRIMARY KEY (BookId)
+
+	ALTER TABLE [Books]
+	ADD CONSTRAINT FK_Books_AuthorId FOREIGN KEY (AuthorId) REFERENCES Authors(AuthorId)
+	
+	ALTER TABLE [Books]
+	ADD CONSTRAINT FK_Books_SeriesId FOREIGN KEY (SeriesId) REFERENCES Series(SeriesId)
+END
